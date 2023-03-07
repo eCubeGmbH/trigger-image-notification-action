@@ -1,0 +1,32 @@
+name: 'Trigger image notification'
+description: 'triggers a workflow dispatch about image updates in a remote repository'
+inputs:
+  imageName:
+    type: string
+    required: true
+  imageTag:
+    type: string
+    required: true
+  serviceName:
+    type: string
+runs:
+  using: 'composite'
+  steps:
+  - name: Repository Dispatch DEV
+    uses: peter-evans/repository-dispatch@v2
+    if: >-
+      !startsWith(github.ref, 'refs/tags/v')
+    with:
+      token: ${{ secrets.EPC_PAT }}
+      repository: ${{ github.repository_owner }}/epc-deployment-configurations
+      event-type: new-image
+      client-payload: '{"imageName": "${{ env.REGISTRY }}/${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "dev"}'
+
+  - name: Repository Dispatch DEMO
+    uses: peter-evans/repository-dispatch@v2
+    if: startsWith(github.ref, 'refs/tags/v')
+    with:
+      token: ${{ secrets.EPC_PAT }}
+      repository: ${{ github.repository_owner }}/epc-deployment-configurations
+      event-type: new-image
+      client-payload: '{"imageName": "${{ env.REGISTRY }}/${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "demo"}'
