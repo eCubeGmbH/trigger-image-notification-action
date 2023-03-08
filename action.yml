@@ -29,7 +29,7 @@ runs:
       token: ${{ inputs.token }}
       repository: ${{ inputs.remoteRepo }}
       event-type: new-image
-      client-payload: '{"imageName": "${{ env.REGISTRY }}/${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "dev"}'
+      client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "dev"}'
 
   - name: Repository Dispatch DEMO
     uses: peter-evans/repository-dispatch@v2
@@ -38,4 +38,4 @@ runs:
       token: ${{ inputs.token }}
       repository: ${{ inputs.remoteRepo }}
       event-type: new-image
-      client-payload: '{"imageName": "${{ env.REGISTRY }}/${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "demo"}'
+      client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "demo"}'
