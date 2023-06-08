@@ -31,11 +31,11 @@ runs:
       event-type: new-image
       client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "dev"}'
 
-  - name: Repository Dispatch DEMO
+  - name: Repository Dispatch STAGE
     uses: peter-evans/repository-dispatch@v2
     if: startsWith(github.ref, 'refs/tags/v')
     with:
       token: ${{ inputs.token }}
       repository: ${{ inputs.remoteRepo }}
       event-type: new-image
-      client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "demo"}'
+      client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "stage"}'
