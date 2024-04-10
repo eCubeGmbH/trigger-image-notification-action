@@ -22,7 +22,7 @@ runs:
   using: 'composite'
   steps:
   - name: Repository Dispatch DEV
-    uses: peter-evans/repository-dispatch@v2
+    uses: peter-evans/repository-dispatch@v3
     if: >-
       !startsWith(github.ref, 'refs/tags/v')
     with:
@@ -32,7 +32,7 @@ runs:
       client-payload: '{"imageName": "${{ inputs.imageName }}", "imageTag":"${{ inputs.imageTag }}", "service": "${{ inputs.serviceName  || github.repository }}", "environment": "dev"}'
 
   - name: Repository Dispatch STAGE
-    uses: peter-evans/repository-dispatch@v2
+    uses: peter-evans/repository-dispatch@v3
     if: startsWith(github.ref, 'refs/tags/v')
     with:
       token: ${{ inputs.token }}
